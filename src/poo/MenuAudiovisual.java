@@ -8,6 +8,8 @@ public class MenuAudiovisual {
     private static final Scanner sc = new Scanner(System.in);
     private static final ArrayList<ContenidoAudiovisual> contenidos = new ArrayList<>();
 
+    private record DatosBasicos(String titulo, int duracion, String genero) { }
+
     public static void main(String[] args) {
         int opcion;
         do {
@@ -50,86 +52,84 @@ public class MenuAudiovisual {
 
     // ---------- Registro de contenido ----------
 
+    private static DatosBasicos leerDatosBasicos(String mensajeDuracion) {
+        String titulo = leerTexto("Título: ");
+        int duracion = leerEntero(mensajeDuracion, 1);
+        String genero = leerTexto("Género: ");
+        return new DatosBasicos(titulo, duracion, genero);
+    }
+
+    private static void registrarContenido(ContenidoAudiovisual contenido, String mensajeRegistro) {
+        contenidos.add(contenido);
+        System.out.println(mensajeRegistro + " con ID " + contenido.getId() + ".");
+    }
+
+    private static void repetir(int veces, Runnable accion) {
+        for (int i = 0; i < veces; i++) {
+            accion.run();
+        }
+    }
+
     private static void registrarPelicula() {
         System.out.println("--- Nueva película ---");
-        String titulo = leerTexto("Título: ");
-        int duracion = leerEntero("Duración en minutos: ", 1);
-        String genero = leerTexto("Género: ");
+        DatosBasicos datos = leerDatosBasicos("Duración en minutos: ");
         String estudio = leerTexto("Estudio: ");
-        Pelicula pelicula = new Pelicula(titulo, duracion, genero, estudio);
+        Pelicula pelicula = new Pelicula(datos.titulo(), datos.duracion(), datos.genero(), estudio);
 
         int cantidad = leerEntero("¿Cuántos actores quieres agregar? (0 = ninguno): ", 0);
-        for (int i = 1; i <= cantidad; i++) {
-            System.out.println("Actor " + i + ":");
-            pelicula.agregarActor(crearActor());
-        }
-        contenidos.add(pelicula);
-        System.out.println("Película registrada con ID " + pelicula.getId() + ".");
+        repetir(cantidad, () -> agregarActorA(pelicula));
+        registrarContenido(pelicula, "Película registrada");
     }
 
     private static void registrarSerie() {
         System.out.println("--- Nueva serie de TV ---");
-        String titulo = leerTexto("Título: ");
-        int duracion = leerEntero("Duración por episodio en minutos: ", 1);
-        String genero = leerTexto("Género: ");
-        SerieDeTV serie = new SerieDeTV(titulo, duracion, genero);
+        DatosBasicos datos = leerDatosBasicos("Duración por episodio en minutos: ");
+        SerieDeTV serie = new SerieDeTV(datos.titulo(), datos.duracion(), datos.genero());
 
         int cantidad = leerEntero("¿Cuántas temporadas quieres agregar? (0 = ninguna): ", 0);
-        for (int i = 0; i < cantidad; i++) {
-            agregarTemporadaA(serie);
-        }
-        contenidos.add(serie);
-        System.out.println("Serie registrada con ID " + serie.getId() + ".");
+        repetir(cantidad, () -> agregarTemporadaA(serie));
+        registrarContenido(serie, "Serie registrada");
     }
 
     private static void registrarDocumental() {
         System.out.println("--- Nuevo documental ---");
-        String titulo = leerTexto("Título: ");
-        int duracion = leerEntero("Duración en minutos: ", 1);
-        String genero = leerTexto("Género: ");
+        DatosBasicos datos = leerDatosBasicos("Duración en minutos: ");
         String tema = leerTexto("Tema: ");
-        Documental documental = new Documental(titulo, duracion, genero, tema);
+        Documental documental = new Documental(datos.titulo(), datos.duracion(), datos.genero(), tema);
 
         if (leerSiNo("¿Asignar un investigador?")) {
             documental.setInvestigador(crearInvestigador());
         }
-        contenidos.add(documental);
-        System.out.println("Documental registrado con ID " + documental.getId() + ".");
+        registrarContenido(documental, "Documental registrado");
     }
 
     private static void registrarPodcast() {
         System.out.println("--- Nuevo podcast ---");
-        String titulo = leerTexto("Título: ");
-        int duracion = leerEntero("Duración por episodio en minutos: ", 1);
-        String genero = leerTexto("Género: ");
+        DatosBasicos datos = leerDatosBasicos("Duración por episodio en minutos: ");
         String anfitrion = leerTexto("Anfitrión: ");
         String plataforma = leerTexto("Plataforma: ");
         int episodios = leerEntero("Cantidad de episodios actuales: ", 0);
-        Podcast podcast = new Podcast(titulo, duracion, genero, anfitrion, plataforma, episodios);
+        Podcast podcast = new Podcast(datos.titulo(), datos.duracion(), datos.genero(),
+                anfitrion, plataforma, episodios);
 
         if (leerSiNo("¿Agregar un invitado?")) {
             podcast.setInvitado(crearInvitado());
         }
-        contenidos.add(podcast);
-        System.out.println("Podcast registrado con ID " + podcast.getId() + ".");
+        registrarContenido(podcast, "Podcast registrado");
     }
 
     private static void registrarConcierto() {
         System.out.println("--- Nuevo concierto ---");
-        String titulo = leerTexto("Título: ");
-        int duracion = leerEntero("Duración en minutos: ", 1);
-        String genero = leerTexto("Género: ");
+        DatosBasicos datos = leerDatosBasicos("Duración en minutos: ");
         String artista = leerTexto("Artista: ");
         String lugar = leerTexto("Lugar: ");
         String fecha = leerTexto("Fecha (dd/mm/aaaa): ");
-        Concierto concierto = new Concierto(titulo, duracion, genero, artista, lugar, fecha);
+        Concierto concierto = new Concierto(datos.titulo(), datos.duracion(), datos.genero(),
+                artista, lugar, fecha);
 
         int cantidad = leerEntero("¿Cuántas canciones tiene el setlist? (0 = ninguna): ", 0);
-        for (int i = 0; i < cantidad; i++) {
-            agregarCancionA(concierto);
-        }
-        contenidos.add(concierto);
-        System.out.println("Concierto registrado con ID " + concierto.getId() + ".");
+        repetir(cantidad, () -> agregarCancionA(concierto));
+        registrarContenido(concierto, "Concierto registrado");
     }
 
     // ---------- Creación de clases de apoyo ----------
@@ -152,6 +152,11 @@ public class MenuAudiovisual {
         String nombre = leerTexto("  Nombre del invitado: ");
         String profesion = leerTexto("  Profesión: ");
         return new Invitado(nombre, profesion);
+    }
+
+    private static void agregarActorA(Pelicula pelicula) {
+        System.out.println("Actor " + (pelicula.getActores().size() + 1) + ":");
+        pelicula.agregarActor(crearActor());
     }
 
     private static void agregarTemporadaA(SerieDeTV serie) {
