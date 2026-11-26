@@ -2,7 +2,7 @@ package uni1a;
 
 import java.util.ArrayList;
 
-public class Concierto extends ContenidoAudiovisual {
+public class Concierto extends ContenidoAudiovisual implements AccionEspecial {
     private String artista;
     private String lugar;
     private String fecha;
@@ -39,6 +39,12 @@ public class Concierto extends ContenidoAudiovisual {
             totalSegundos += cancion.getDuracionSegundos();
         }
         return totalSegundos / 60.0;
+    }
+
+    @Override
+    public String ejecutarAccionEspecial() {
+        return String.format("Duración del setlist: %.1f min (%d canciones)",
+                calcularDuracionSetlist(), setlist.size());
     }
 
     @Override

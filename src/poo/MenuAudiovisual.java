@@ -257,12 +257,8 @@ public class MenuAudiovisual {
         ContenidoAudiovisual contenido = elegirContenido();
         if (contenido == null) return;
 
-        if (contenido instanceof Podcast podcast) {
-            podcast.publicarEpisodio();
-            System.out.println("Episodio publicado. Total: " + podcast.getCantidadEpisodios() + ".");
-        } else if (contenido instanceof Concierto concierto) {
-            System.out.printf("Duración del setlist: %.1f min (%d canciones)%n",
-                    concierto.calcularDuracionSetlist(), concierto.getSetlist().size());
+        if (contenido instanceof AccionEspecial accion) {
+            System.out.println(accion.ejecutarAccionEspecial());
         } else {
             System.out.println("Este contenido no tiene acciones especiales.");
         }

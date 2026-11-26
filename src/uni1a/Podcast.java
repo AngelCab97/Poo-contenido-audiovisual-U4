@@ -1,6 +1,6 @@
 package uni1a;
 
-public class Podcast extends ContenidoAudiovisual {
+public class Podcast extends ContenidoAudiovisual implements AccionEspecial {
     private String anfitrion;
     private String plataforma;
     private int cantidadEpisodios;
@@ -28,6 +28,12 @@ public class Podcast extends ContenidoAudiovisual {
 
     public void publicarEpisodio() {
         cantidadEpisodios++;
+    }
+
+    @Override
+    public String ejecutarAccionEspecial() {
+        publicarEpisodio();
+        return "Episodio publicado. Total: " + cantidadEpisodios + ".";
     }
 
     @Override
