@@ -5,7 +5,8 @@ import java.util.Scanner;
 import uni1a.*;
 
 public class MenuAudiovisual {
-    private static final Scanner sc = new Scanner(System.in);
+    private static final int ANIO_MINIMO_ESTRENO = 1900;
+    private static final Scanner teclado = new Scanner(System.in);
     private static final ArrayList<ContenidoAudiovisual> contenidos = new ArrayList<>();
 
     private record DatosBasicos(String titulo, int duracion, String genero) { }
@@ -163,7 +164,7 @@ public class MenuAudiovisual {
         int numero = serie.getCantidadTemporadas() + 1;
         System.out.println("Temporada " + numero + ":");
         int episodios = leerEntero("  Cantidad de episodios: ", 1);
-        int anio = leerEntero("  Año de estreno: ", 1900);
+        int anio = leerEntero("  Año de estreno: ", ANIO_MINIMO_ESTRENO);
         serie.agregarTemporada(numero, episodios, anio);
     }
 
@@ -181,24 +182,24 @@ public class MenuAudiovisual {
             System.out.println("No hay contenido registrado todavía.");
             return;
         }
-        for (ContenidoAudiovisual c : contenidos) {
-            c.mostrarDetalles();
+        for (ContenidoAudiovisual contenido : contenidos) {
+            contenido.mostrarDetalles();
         }
     }
 
     private static void listarResumen() {
-        for (ContenidoAudiovisual c : contenidos) {
-            System.out.println("[" + c.getId() + "] " + c.getTitulo()
-                    + " (" + c.getClass().getSimpleName() + ")");
+        for (ContenidoAudiovisual contenido : contenidos) {
+            System.out.println("[" + contenido.getId() + "] " + contenido.getTitulo()
+                    + " (" + contenido.getClass().getSimpleName() + ")");
         }
     }
 
     private static void buscarPorTitulo() {
         String texto = leerTexto("Texto a buscar en el título: ").toLowerCase();
         int encontrados = 0;
-        for (ContenidoAudiovisual c : contenidos) {
-            if (c.getTitulo().toLowerCase().contains(texto)) {
-                c.mostrarDetalles();
+        for (ContenidoAudiovisual contenido : contenidos) {
+            if (contenido.getTitulo().toLowerCase().contains(texto)) {
+                contenido.mostrarDetalles();
                 encontrados++;
             }
         }
@@ -208,9 +209,9 @@ public class MenuAudiovisual {
     }
 
     private static ContenidoAudiovisual buscarPorId(int id) {
-        for (ContenidoAudiovisual c : contenidos) {
-            if (c.getId() == id) {
-                return c;
+        for (ContenidoAudiovisual contenido : contenidos) {
+            if (contenido.getId() == id) {
+                return contenido;
             }
         }
         return null;
@@ -223,56 +224,56 @@ public class MenuAudiovisual {
         }
         listarResumen();
         int id = leerEntero("ID del contenido: ", 0);
-        ContenidoAudiovisual c = buscarPorId(id);
-        if (c == null) {
+        ContenidoAudiovisual contenido = buscarPorId(id);
+        if (contenido == null) {
             System.out.println("No existe un contenido con ese ID.");
         }
-        return c;
+        return contenido;
     }
 
     private static void agregarElemento() {
-        ContenidoAudiovisual c = elegirContenido();
-        if (c == null) return;
+        ContenidoAudiovisual contenido = elegirContenido();
+        if (contenido == null) return;
 
-        if (c instanceof Pelicula p) {
-            p.agregarActor(crearActor());
-            System.out.println("Actor agregado a \"" + p.getTitulo() + "\".");
-        } else if (c instanceof SerieDeTV s) {
-            agregarTemporadaA(s);
-            System.out.println("Temporada agregada. Total: " + s.getCantidadTemporadas() + ".");
-        } else if (c instanceof Documental d) {
-            d.setInvestigador(crearInvestigador());
-            System.out.println("Investigador asignado a \"" + d.getTitulo() + "\".");
-        } else if (c instanceof Podcast pod) {
-            pod.setInvitado(crearInvitado());
-            System.out.println("Invitado asignado a \"" + pod.getTitulo() + "\".");
-        } else if (c instanceof Concierto con) {
-            agregarCancionA(con);
+        if (contenido instanceof Pelicula pelicula) {
+            pelicula.agregarActor(crearActor());
+            System.out.println("Actor agregado a \"" + pelicula.getTitulo() + "\".");
+        } else if (contenido instanceof SerieDeTV serie) {
+            agregarTemporadaA(serie);
+            System.out.println("Temporada agregada. Total: " + serie.getCantidadTemporadas() + ".");
+        } else if (contenido instanceof Documental documental) {
+            documental.setInvestigador(crearInvestigador());
+            System.out.println("Investigador asignado a \"" + documental.getTitulo() + "\".");
+        } else if (contenido instanceof Podcast podcast) {
+            podcast.setInvitado(crearInvitado());
+            System.out.println("Invitado asignado a \"" + podcast.getTitulo() + "\".");
+        } else if (contenido instanceof Concierto concierto) {
+            agregarCancionA(concierto);
             System.out.println("Canción agregada al setlist.");
         }
     }
 
     private static void accionesEspeciales() {
-        ContenidoAudiovisual c = elegirContenido();
-        if (c == null) return;
+        ContenidoAudiovisual contenido = elegirContenido();
+        if (contenido == null) return;
 
-        if (c instanceof Podcast pod) {
-            pod.publicarEpisodio();
-            System.out.println("Episodio publicado. Total: " + pod.getCantidadEpisodios() + ".");
-        } else if (c instanceof Concierto con) {
+        if (contenido instanceof Podcast podcast) {
+            podcast.publicarEpisodio();
+            System.out.println("Episodio publicado. Total: " + podcast.getCantidadEpisodios() + ".");
+        } else if (contenido instanceof Concierto concierto) {
             System.out.printf("Duración del setlist: %.1f min (%d canciones)%n",
-                    con.calcularDuracionSetlist(), con.getSetlist().size());
+                    concierto.calcularDuracionSetlist(), concierto.getSetlist().size());
         } else {
             System.out.println("Este contenido no tiene acciones especiales.");
         }
     }
 
     private static void eliminarContenido() {
-        ContenidoAudiovisual c = elegirContenido();
-        if (c == null) return;
+        ContenidoAudiovisual contenido = elegirContenido();
+        if (contenido == null) return;
 
-        if (leerSiNo("¿Seguro que quieres eliminar \"" + c.getTitulo() + "\"?")) {
-            contenidos.remove(c);
+        if (leerSiNo("¿Seguro que quieres eliminar \"" + contenido.getTitulo() + "\"?")) {
+            contenidos.remove(contenido);
             System.out.println("Contenido eliminado.");
         } else {
             System.out.println("Operación cancelada.");
@@ -284,27 +285,27 @@ public class MenuAudiovisual {
         avatar.agregarActor(new Actor("Sam Worthington", 49, "Australiana"));
         avatar.agregarActor(new Actor("Zoe Saldaña", 48, "Estadounidense"));
 
-        SerieDeTV got = new SerieDeTV("Game of Thrones", 60, "Fantasy");
-        got.agregarTemporada(1, 10, 2011);
-        got.agregarTemporada(2, 10, 2012);
+        SerieDeTV gameOfThrones = new SerieDeTV("Game of Thrones", 60, "Fantasy");
+        gameOfThrones.agregarTemporada(1, 10, 2011);
+        gameOfThrones.agregarTemporada(2, 10, 2012);
 
         Documental cosmos = new Documental("Cosmos", 45, "Science", "Astronomy");
         cosmos.setInvestigador(new Investigador("Carl Sagan", "Astronomía", 40));
 
-        Podcast podcast = new Podcast("Entre Códigos", 60, "Tecnología",
+        Podcast entreCodigos = new Podcast("Entre Códigos", 60, "Tecnología",
                 "Andrés Mora", "Spotify", 25);
-        podcast.setInvitado(new Invitado("Laura Vega", "Ingeniera de software"));
+        entreCodigos.setInvitado(new Invitado("Laura Vega", "Ingeniera de software"));
 
-        Concierto concierto = new Concierto("Noche de Rock", 120, "Rock",
+        Concierto nocheDeRock = new Concierto("Noche de Rock", 120, "Rock",
                 "Los Andinos", "Estadio Alejandro Serrano Aguilar", "15/11/2026");
-        concierto.agregarCancion("Camino al Sur", 245);
-        concierto.agregarCancion("Luces de Cuenca", 198);
+        nocheDeRock.agregarCancion("Camino al Sur", 245);
+        nocheDeRock.agregarCancion("Luces de Cuenca", 198);
 
         contenidos.add(avatar);
-        contenidos.add(got);
+        contenidos.add(gameOfThrones);
         contenidos.add(cosmos);
-        contenidos.add(podcast);
-        contenidos.add(concierto);
+        contenidos.add(entreCodigos);
+        contenidos.add(nocheDeRock);
         System.out.println("Se cargaron 5 contenidos de ejemplo.");
     }
 
@@ -314,7 +315,7 @@ public class MenuAudiovisual {
         String texto;
         do {
             System.out.print(mensaje);
-            texto = sc.nextLine().trim();
+            texto = teclado.nextLine().trim();
             if (texto.isEmpty()) {
                 System.out.println("Este campo no puede estar vacío.");
             }
@@ -326,7 +327,7 @@ public class MenuAudiovisual {
         while (true) {
             System.out.print(mensaje);
             try {
-                int valor = Integer.parseInt(sc.nextLine().trim());
+                int valor = Integer.parseInt(teclado.nextLine().trim());
                 if (valor >= minimo) {
                     return valor;
                 }
@@ -340,7 +341,7 @@ public class MenuAudiovisual {
     private static boolean leerSiNo(String mensaje) {
         while (true) {
             System.out.print(mensaje + " (s/n): ");
-            String respuesta = sc.nextLine().trim().toLowerCase();
+            String respuesta = teclado.nextLine().trim().toLowerCase();
             if (respuesta.equals("s")) return true;
             if (respuesta.equals("n")) return false;
             System.out.println("Responde con 's' o 'n'.");

@@ -5,7 +5,7 @@ public abstract class ContenidoAudiovisual {
     private String titulo;
     private int duracionEnMinutos;
     private String genero;
-    private int id;
+    private final int id;
 
     public ContenidoAudiovisual(String titulo, int duracionEnMinutos, String genero) {
         this.id = contar++;
@@ -14,7 +14,6 @@ public abstract class ContenidoAudiovisual {
         this.genero = genero;
     }
 
-    // Getter y Setter para el campo 'titulo'
     public String getTitulo() {
         return titulo;
     }
@@ -23,7 +22,6 @@ public abstract class ContenidoAudiovisual {
         this.titulo = titulo;
     }
 
-    // Getter y Setter para el campo 'duracionEnMinutos'
     public int getDuracionEnMinutos() {
         return duracionEnMinutos;
     }
@@ -32,7 +30,6 @@ public abstract class ContenidoAudiovisual {
         this.duracionEnMinutos = duracionEnMinutos;
     }
 
-    // Getter y Setter para el campo 'genero'
     public String getGenero() {
         return genero;
     }
@@ -41,10 +38,10 @@ public abstract class ContenidoAudiovisual {
         this.genero = genero;
     }
 
-    // Getter para el campo 'id' (no se proporciona el Setter ya que 'id' se asigna en el constructor y parece ser inmutable)
+    // El id se asigna automáticamente al crear el objeto y no puede cambiar
     public int getId() {
         return id;
     }
-    
+
     public abstract void mostrarDetalles();
 }
