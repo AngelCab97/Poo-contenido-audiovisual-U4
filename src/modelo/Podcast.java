@@ -1,4 +1,4 @@
-package uni1a;
+package modelo;
 
 public class Podcast extends ContenidoAudiovisual implements AccionEspecial {
     private String anfitrion;
@@ -37,18 +37,14 @@ public class Podcast extends ContenidoAudiovisual implements AccionEspecial {
     }
 
     @Override
-    public void mostrarDetalles() {
-        System.out.println("Detalles del podcast:");
-        System.out.println("ID: " + getId());
-        System.out.println("Título: " + getTitulo());
-        System.out.println("Duración en minutos: " + getDuracionEnMinutos());
-        System.out.println("Género: " + getGenero());
-        System.out.println("Anfitrión: " + anfitrion);
-        System.out.println("Plataforma: " + plataforma);
-        System.out.println("Episodios: " + cantidadEpisodios);
+    public String obtenerDetalles() {
+        StringBuilder detalles = new StringBuilder(detallesBase("Detalles del podcast:"));
+        detalles.append("\nAnfitrión: ").append(anfitrion);
+        detalles.append("\nPlataforma: ").append(plataforma);
+        detalles.append("\nEpisodios: ").append(cantidadEpisodios);
         if (invitado != null) {
-            System.out.println("Invitado: " + invitado);
+            detalles.append("\nInvitado: ").append(invitado);
         }
-        System.out.println();
+        return detalles.toString();
     }
 }

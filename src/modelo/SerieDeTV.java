@@ -1,4 +1,4 @@
-package uni1a;
+package modelo;
 
 import java.util.ArrayList;
 
@@ -23,16 +23,12 @@ public class SerieDeTV extends ContenidoAudiovisual {
     }
 
     @Override
-    public void mostrarDetalles() {
-        System.out.println("Detalles de la serie de TV:");
-        System.out.println("ID: " + getId());
-        System.out.println("Título: " + getTitulo());
-        System.out.println("Duración en minutos: " + getDuracionEnMinutos());
-        System.out.println("Género: " + getGenero());
-        System.out.println("Temporadas: " + getCantidadTemporadas());
+    public String obtenerDetalles() {
+        StringBuilder detalles = new StringBuilder(detallesBase("Detalles de la serie de TV:"));
+        detalles.append("\nTemporadas: ").append(getCantidadTemporadas());
         for (Temporada temporada : temporadas) {
-            System.out.println(" - " + temporada);
+            detalles.append("\n - ").append(temporada);
         }
-        System.out.println();
+        return detalles.toString();
     }
 }

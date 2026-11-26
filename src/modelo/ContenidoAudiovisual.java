@@ -1,4 +1,4 @@
-package uni1a;
+package modelo;
 
 public abstract class ContenidoAudiovisual {
     private static int contar = 0;
@@ -43,5 +43,13 @@ public abstract class ContenidoAudiovisual {
         return id;
     }
 
-    public abstract void mostrarDetalles();
+    protected String detallesBase(String encabezado) {
+        return encabezado + "\n"
+                + "ID: " + id + "\n"
+                + "Título: " + titulo + "\n"
+                + "Duración en minutos: " + duracionEnMinutos + "\n"
+                + "Género: " + genero;
+    }
+
+    public abstract String obtenerDetalles();
 }

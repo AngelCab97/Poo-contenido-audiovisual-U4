@@ -1,4 +1,4 @@
-package uni1a;
+package modelo;
 
 public class Documental extends ContenidoAudiovisual {
     private String tema;
@@ -26,16 +26,12 @@ public class Documental extends ContenidoAudiovisual {
     }
 
     @Override
-    public void mostrarDetalles() {
-        System.out.println("Detalles del documental:");
-        System.out.println("ID: " + getId());
-        System.out.println("Título: " + getTitulo());
-        System.out.println("Duración en minutos: " + getDuracionEnMinutos());
-        System.out.println("Género: " + getGenero());
-        System.out.println("Tema: " + tema);
+    public String obtenerDetalles() {
+        StringBuilder detalles = new StringBuilder(detallesBase("Detalles del documental:"));
+        detalles.append("\nTema: ").append(tema);
         if (investigador != null) {
-            System.out.println("Investigador: " + investigador);
+            detalles.append("\nInvestigador: ").append(investigador);
         }
-        System.out.println();
+        return detalles.toString();
     }
 }

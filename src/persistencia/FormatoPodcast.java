@@ -6,9 +6,9 @@ import static persistencia.TextoCsv.convertirAEntero;
 import static persistencia.TextoCsv.dividirCampos;
 import static persistencia.TextoCsv.dividirDatos;
 
-import uni1a.ContenidoAudiovisual;
-import uni1a.Invitado;
-import uni1a.Podcast;
+import modelo.ContenidoAudiovisual;
+import modelo.Invitado;
+import modelo.Podcast;
 
 public class FormatoPodcast implements FormatoContenido {
 

@@ -10,9 +10,9 @@ import static persistencia.TextoCsv.dividirElementos;
 
 import java.util.stream.Collectors;
 
-import uni1a.Cancion;
-import uni1a.Concierto;
-import uni1a.ContenidoAudiovisual;
+import modelo.Cancion;
+import modelo.Concierto;
+import modelo.ContenidoAudiovisual;
 
 public class FormatoConcierto implements FormatoContenido {
 

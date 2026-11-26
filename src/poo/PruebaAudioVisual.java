@@ -1,5 +1,5 @@
 package poo;
-import uni1a.*;
+import modelo.*;
 
 public class PruebaAudioVisual {
     public static void main(String[] args) {
@@ -46,7 +46,8 @@ public class PruebaAudioVisual {
 
         // Mostrar los detalles de cada contenido audiovisual
         for (ContenidoAudiovisual contenido : contenidos) {
-            contenido.mostrarDetalles();
+            System.out.println(contenido.obtenerDetalles());
+            System.out.println();
         }
     }
 }

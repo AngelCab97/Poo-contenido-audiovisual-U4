@@ -8,9 +8,9 @@ import static persistencia.TextoCsv.dividirElementos;
 
 import java.util.stream.Collectors;
 
-import uni1a.ContenidoAudiovisual;
-import uni1a.SerieDeTV;
-import uni1a.Temporada;
+import modelo.ContenidoAudiovisual;
+import modelo.SerieDeTV;
+import modelo.Temporada;
 
 public class FormatoSerie implements FormatoContenido {
 

@@ -1,4 +1,4 @@
-package uni1a;
+package modelo;
 
 import java.util.ArrayList;
 
@@ -48,22 +48,18 @@ public class Concierto extends ContenidoAudiovisual implements AccionEspecial {
     }
 
     @Override
-    public void mostrarDetalles() {
-        System.out.println("Detalles del concierto:");
-        System.out.println("ID: " + getId());
-        System.out.println("Título: " + getTitulo());
-        System.out.println("Duración en minutos: " + getDuracionEnMinutos());
-        System.out.println("Género: " + getGenero());
-        System.out.println("Artista: " + artista);
-        System.out.println("Lugar: " + lugar);
-        System.out.println("Fecha: " + fecha);
+    public String obtenerDetalles() {
+        StringBuilder detalles = new StringBuilder(detallesBase("Detalles del concierto:"));
+        detalles.append("\nArtista: ").append(artista);
+        detalles.append("\nLugar: ").append(lugar);
+        detalles.append("\nFecha: ").append(fecha);
         if (!setlist.isEmpty()) {
-            System.out.println("Setlist (" + setlist.size() + " canciones, "
-                    + String.format("%.1f", calcularDuracionSetlist()) + " min):");
+            detalles.append("\nSetlist (").append(setlist.size()).append(" canciones, ")
+                    .append(String.format("%.1f", calcularDuracionSetlist())).append(" min):");
             for (Cancion cancion : setlist) {
-                System.out.println(" - " + cancion);
+                detalles.append("\n - ").append(cancion);
             }
         }
-        System.out.println();
+        return detalles.toString();
     }
 }

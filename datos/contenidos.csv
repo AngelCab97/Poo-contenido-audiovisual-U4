@@ -1,6 +1,6 @@
 tipo,titulo,duracion,genero,detalle
 PELICULA,Avatar,125,Accion,20th Century Studios#Sam Worthington:49:Australiana;Zoe Saldaña:48:Estadounidense
-SERIE,Game of Thrones,60,Fantasy,1:10:2011;2:10:2012;3:10:2013
+SERIE,Game of Thrones,60,Fantasy,1:10:2011;2:10:2012
 DOCUMENTAL,Cosmos,45,Science,Astronomy#Carl Sagan:Astronomía:40
-PODCAST,Entre Códigos,60,Tecnología,Andrés Mora#Spotify#26#Laura Vega:Ingeniera de software
-CONCIERTO,Noche de Rock,120,Rock,Los Andinos#Estadio Alejandro Serrano Aguilar#15/11/2026#Camino al Sur:245;Luces de Cuenca:198;Madrugada:312
+PODCAST,Entre Códigos,60,Tecnología,Andrés Mora#Spotify#25#Laura Vega:Ingeniera de software
+CONCIERTO,Noche de Rock,120,Rock,Los Andinos#Estadio Alejandro Serrano Aguilar#15/11/2026#Camino al Sur:245;Luces de Cuenca:198

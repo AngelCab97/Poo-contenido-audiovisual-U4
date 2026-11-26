@@ -1,6 +1,6 @@
 package persistencia;
 
-import uni1a.ContenidoAudiovisual;
+import modelo.ContenidoAudiovisual;
 
 public interface FormatoContenido {
 

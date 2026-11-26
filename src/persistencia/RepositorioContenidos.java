@@ -1,7 +1,8 @@
 package persistencia;
 
 import java.util.List;
-import uni1a.ContenidoAudiovisual;
+
+import modelo.ContenidoAudiovisual;
 
 public interface RepositorioContenidos {
 

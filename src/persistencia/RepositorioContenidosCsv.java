@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import uni1a.ContenidoAudiovisual;
+import modelo.ContenidoAudiovisual;
 
 public class RepositorioContenidosCsv implements RepositorioContenidos {
 
